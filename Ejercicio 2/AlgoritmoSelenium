@@ -3,8 +3,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 import time
-
 
 #Aqui inicializamos el driver de Chrome y le añadimos la configuración de que no se cierre el navegador al acabar la ejecución
 driver = webdriver.Chrome()
@@ -22,21 +22,19 @@ wait = WebDriverWait(driver, 4)
 AceptarTodo = wait.until(EC.presence_of_element_located((By.ID, "L2AGLb")))
 AceptarTodo.click()
 
-# Metemos el texto en el buscador
+# Metemos el texto en el buscador y pulsamos intro
 driver.find_element(By.ID, "APjFqb").send_keys("automatización")
-
-# Pulsamos el botón "Buscar con Google"
-BuscarGoogle = wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='FPdoLc lJ9FBc']/center/input[@value='Buscar con Google']")))
-BuscarGoogle.click()
+driver.find_element(By.ID, "APjFqb").send_keys(Keys.RETURN)
 
 #Pulsamos en el enlace de Wikipedia
 Wikipedia = wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "Wikipedia, la enciclopedia libre")))
 Wikipedia.click()
 
 #Nos dirigimos a la zona de la página donde se describe el año del primero proceso automático
-Historia = wait.until(EC.presence_of_element_located((By.ID, "Historia")))
-ActionChains(driver).scroll_to_element(Historia).perform()
+Historia = wait.until(EC.presence_of_element_located((By.ID, "Siglo_XX")))
+ActionChains(driver,2).scroll_to_element(Historia).perform()
 
-driver.save_screenshot('./Ejercicio 2/PrimerProcesoAutomatico.png')
+boolValue = driver.save_screenshot('./automatismo.png')
 
-driver.quit()
+if boolValue:
+    driver.quit()
